@@ -26,10 +26,10 @@ testing of each story.
 
 **Purpose**: Create the solution and scaffold the selected projects.
 
-- [ ] T001 Create `RSSFeedReader.sln` and the planned `backend/` and `frontend/` project directories.
-- [ ] T002 [P] Scaffold the ASP.NET Core Web API project at `backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj`.
-- [ ] T003 [P] Scaffold the Blazor WebAssembly project at `frontend/RSSFeedReader.UI/RSSFeedReader.UI.csproj`.
-- [ ] T004 Create the xUnit test project at `backend/RSSFeedReader.Api.Tests/RSSFeedReader.Api.Tests.csproj`, add its reference to `backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj`, and add all three projects to `RSSFeedReader.sln`.
+- [X] T001 Create `RSSFeedReader.sln` and the planned `backend/` and `frontend/` project directories.
+- [X] T002 [P] Scaffold the ASP.NET Core Web API project at `backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj`.
+- [X] T003 [P] Scaffold the Blazor WebAssembly project at `frontend/RSSFeedReader.UI/RSSFeedReader.UI.csproj`.
+- [X] T004 Create the xUnit test project at `backend/RSSFeedReader.Api.Tests/RSSFeedReader.Api.Tests.csproj`, add its reference to `backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj`, and add all three projects to `RSSFeedReader.sln`.
 
 ---
 
@@ -37,8 +37,8 @@ testing of each story.
 
 **Purpose**: Configure local frontend/backend communication before implementing the user journey.
 
-- [ ] T005 [P] Configure backend CORS for the stakeholder-documented frontend development origins in `backend/RSSFeedReader.Api/Program.cs` and `backend/RSSFeedReader.Api/Properties/launchSettings.json`.
-- [ ] T006 [P] Configure the frontend API base URL for the stakeholder-documented backend origin in `frontend/RSSFeedReader.UI/wwwroot/appsettings.json` and register the configured `HttpClient` in `frontend/RSSFeedReader.UI/Program.cs`.
+- [X] T005 [P] Configure backend CORS for the stakeholder-documented frontend development origins in `backend/RSSFeedReader.Api/Program.cs` and `backend/RSSFeedReader.Api/Properties/launchSettings.json`.
+- [X] T006 [P] Configure the frontend API base URL for the stakeholder-documented backend origin in `frontend/RSSFeedReader.UI/wwwroot/appsettings.json` and register the configured `HttpClient` in `frontend/RSSFeedReader.UI/Program.cs`.
 
 **Checkpoint**: Solution projects are scaffolded and the UI can address the local API. User story
 work can begin.
@@ -57,17 +57,17 @@ empty.
 
 ### Tests for User Story 1
 
-- [ ] T007 [US1] Add API integration tests using `WebApplicationFactory<Program>` in `backend/RSSFeedReader.Api.Tests/SubscriptionsApiTests.cs` for initial empty GET, POST then GET, duplicate submissions, and missing or empty URL rejection without changing the list; use a non-empty test URL and assert it is returned as submitted without requiring feed access.
+- [X] T007 [US1] Add API integration tests using `WebApplicationFactory<Program>` in `backend/RSSFeedReader.Api.Tests/SubscriptionsApiTests.cs` for initial empty GET, POST then GET, duplicate submissions, and missing or empty URL rejection without changing the list; use a non-empty test URL and assert it is returned as submitted without requiring feed access.
 
 ### Implementation for User Story 1
 
-- [ ] T008 [P] [US1] Create the `Subscription` model in `backend/RSSFeedReader.Api/Subscriptions/Subscription.cs` with a required `url` string; preserve the data-model rule verbatim: "Must be non-empty. The MVP does not parse, normalize, or check availability of the URL."
-- [ ] T009 [US1] Implement the session-lifetime ordered in-memory subscription collection in `backend/RSSFeedReader.Api/Subscriptions/SubscriptionStore.cs`; append each accepted submission, allow duplicate URL values, and reject missing or empty URLs without mutating the list.
-- [ ] T010 [US1] Implement `GET /api/subscriptions` and `POST /api/subscriptions` in `backend/RSSFeedReader.Api/Subscriptions/SubscriptionsEndpoints.cs` to match `specs/001-rss-subscription-management/contracts/subscriptions-api.yaml`; return the ordered list, return the created subscription with 200 for non-empty input, and return 400 for missing or empty URL input without fetching or parsing feeds.
-- [ ] T011 [US1] Register the subscription store and map the subscriptions endpoints in `backend/RSSFeedReader.Api/Program.cs` so API state is shared for the running backend process and CORS remains enabled; expose the entry point to `WebApplicationFactory<Program>` tests.
-- [ ] T012 [P] [US1] Implement the frontend subscription API client in `frontend/RSSFeedReader.UI/Services/SubscriptionsApiClient.cs` to retrieve the list and submit new URL values using the contract's JSON shapes.
-- [ ] T013 [US1] Implement the subscription page in `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` with a programmatically labeled URL field, add action, visible URL-text list, and perceivable empty-input feedback; refresh the list after a successful add and render submitted URLs as text rather than active links.
-- [ ] T014 [US1] Build and run the API integration tests for `RSSFeedReader.sln`, then exercise the add, list, duplicate, empty-input, no-feed-fetch, and restart scenarios from `specs/001-rss-subscription-management/quickstart.md`; resolve any failures in the affected implementation files.
+- [X] T008 [P] [US1] Create the `Subscription` model in `backend/RSSFeedReader.Api/Subscriptions/Subscription.cs` with a required `url` string; preserve the data-model rule verbatim: "Must be non-empty. The MVP does not parse, normalize, or check availability of the URL."
+- [X] T009 [US1] Implement the session-lifetime ordered in-memory subscription collection in `backend/RSSFeedReader.Api/Subscriptions/SubscriptionStore.cs`; append each accepted submission, allow duplicate URL values, and reject missing or empty URLs without mutating the list.
+- [X] T010 [US1] Implement `GET /api/subscriptions` and `POST /api/subscriptions` in `backend/RSSFeedReader.Api/Subscriptions/SubscriptionsEndpoints.cs` to match `specs/001-rss-subscription-management/contracts/subscriptions-api.yaml`; return the ordered list, return the created subscription with 200 for non-empty input, and return 400 for missing or empty URL input without fetching or parsing feeds.
+- [X] T011 [US1] Register the subscription store and map the subscriptions endpoints in `backend/RSSFeedReader.Api/Program.cs` so API state is shared for the running backend process and CORS remains enabled; expose the entry point to `WebApplicationFactory<Program>` tests.
+- [X] T012 [P] [US1] Implement the frontend subscription API client in `frontend/RSSFeedReader.UI/Services/SubscriptionsApiClient.cs` to retrieve the list and submit new URL values using the contract's JSON shapes.
+- [X] T013 [US1] Implement the subscription page in `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` with a programmatically labeled URL field, add action, visible URL-text list, and perceivable empty-input feedback; refresh the list after a successful add and render submitted URLs as text rather than active links.
+- [X] T014 [US1] Build and run the API integration tests for `RSSFeedReader.sln`, then exercise the add, list, duplicate, empty-input, no-feed-fetch, and restart scenarios from `specs/001-rss-subscription-management/quickstart.md`; resolve any failures in the affected implementation files.
 
 **Checkpoint**: User Story 1 is independently demonstrable and satisfies the MVP's subscription
 management scope.

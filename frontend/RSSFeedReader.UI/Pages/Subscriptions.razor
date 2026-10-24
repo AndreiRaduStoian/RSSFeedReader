@@ -1,0 +1,67 @@
+@page "/"
+@using RSSFeedReader.UI.Services
+@inject SubscriptionsApiClient SubscriptionsApi
+
+<PageTitle>Subscriptions</PageTitle>
+
+<h1>Subscriptions</h1>
+
+<form @onsubmit="AddSubscriptionAsync" @onsubmit:preventDefault>
+    <label for="feed-url">Feed URL</label>
+    <div class="input-group mb-3">
+        <input id="feed-url"
+               class="form-control"
+               type="text"
+               inputmode="url"
+               @bind="url"
+               aria-describedby="subscription-feedback" />
+        <button class="btn btn-primary" type="submit">Add subscription</button>
+    </div>
+</form>
+
+<p id="subscription-feedback" role="alert">@feedback</p>
+
+<ul>
+    @foreach (var subscription in subscriptions)
+    {
+        <li>@subscription.Url</li>
+    }
+</ul>
+
+@code {
+    private readonly List<SubscriptionsApiClient.Subscription> subscriptions = [];
+    private string url = string.Empty;
+    private string? feedback;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            subscriptions.AddRange(await SubscriptionsApi.GetSubscriptionsAsync());
+        }
+        catch (HttpRequestException)
+        {
+            feedback = "Unable to load subscriptions. Check that the service is running and try again.";
+        }
+    }
+
+    private async Task AddSubscriptionAsync()
+    {
+        if (string.IsNullOrEmpty(url))
+        {
+            feedback = "Enter a feed URL before adding a subscription.";
+            return;
+        }
+
+        try
+        {
+            subscriptions.Add(await SubscriptionsApi.AddSubscriptionAsync(url));
+            url = string.Empty;
+            feedback = null;
+        }
+        catch (HttpRequestException)
+        {
+            feedback = "Unable to add the subscription. Check that the service is running and try again.";
+        }
+    }
+}
