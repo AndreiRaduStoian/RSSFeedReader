@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: RSS Feed Reader Subscriptions API
+  version: 1.0.0
+  description: Session-only subscription management for the RSS Feed Reader MVP.
+servers:
+  - url: http://localhost:5151/api
+paths:
+  /subscriptions:
+    get:
+      summary: List current subscriptions
+      operationId: listSubscriptions
+      responses:
+        "200":
+          description: Current session subscriptions, in submission order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subscription"
+              example:
+                - url: https://devblogs.microsoft.com/dotnet/feed/
+    post:
+      summary: Add a subscription
+      operationId: addSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddSubscriptionRequest"
+            example:
+              url: https://devblogs.microsoft.com/dotnet/feed/
+      responses:
+        "200":
+          description: Subscription added to the current session.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+              example:
+                url: https://devblogs.microsoft.com/dotnet/feed/
+        "400":
+          description: URL is missing or empty; the subscription list is unchanged.
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: integer
+                    const: 400
+                  detail:
+                    type: string
+                required:
+                  - title
+                  - status
+components:
+  schemas:
+    AddSubscriptionRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          description: Submitted URL text; not parsed or checked for reachability.
+      required:
+        - url
+      additionalProperties: false
+    Subscription:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+        - url
+      additionalProperties: false
